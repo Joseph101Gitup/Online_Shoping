@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Shop - Home</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Material Design Lite (shadows, buttons, cards) -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <style>
+        /* Hero section styling */
+        .hero {
+            height: 80vh;
+            background: url('assets/images/banner.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.7);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===================== NAVBAR ======================= -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow-lg">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto" id="navLinks">
+                <!-- Populated dynamically -->
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ===================== HERO SECTION ======================= -->
+<section class="hero" style="background: url('https://thumbs.dreamstime.com/b/online-shopping-payment-man-using-tablet-cart-icon-digital-marketing-banking-finance-dark-blue-background-172987675.jpg') center/cover no-repeat;">
+    <h1>Welcome to AllInOne</h1>
+    <p>Discover the best products at amazing prices.</p>
+
+    <a href="shop.html" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        Start Shopping
+    </a>
+</section>
+
+
+<!-- ===================== FEATURES / CATEGORIES SECTION ======================= -->
+<div class="container py-5">
+    <h2 class="text-center mb-4">Featured Categories</h2>
+
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="card shadow-md p-4">
+                <span class="material-icons md-48">smartphone</span>
+                <h4 class="mt-3">Electronics</h4>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-md p-4">
+                <span class="material-icons md-48">chair</span>
+                <h4 class="mt-3">Furniture</h4>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-md p-4">
+                <span class="material-icons md-48">styler</span>
+                <h4 class="mt-3">Fashion</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ===================== SCRIPTS ======================= -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+<script>
+    // Check login status
+    const loggedInUser = localStorage.getItem("loggedInUser");
+
+    if (!loggedInUser) {
+        // Redirect if not logged in
+        window.location.href = "login.html";
+    }
+
+    // Navbar rendering
+    const nav = document.getElementById("navLinks");
+
+    let user = JSON.parse(localStorage.getItem("users") || "[]")
+        .find(u => u.email === loggedInUser);
+
+    const isAdmin = loggedInUser === "admin@gmail.com";
+
+    nav.innerHTML = `
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
+        ${isAdmin ? `<li class="nav-item"><a class="nav-link" href="add-product.html">Add Product</a></li>` : ""}
+        <li class="nav-item"><a class="nav-link" href="#" id="logoutBtn">Logout</a></li>
+    `;
+
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+    });
+</script>
+
+</body>
+</html>
